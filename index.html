@@ -1,0 +1,1697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Intuit Craft Demo — Richard Wu</title>
+  <style>
+    :root {
+      --bg: #f7f5f2;
+      --surface: #ffffff;
+      --surface-alt: #f0ede8;
+      --border: #e2dbd2;
+      --accent: #c97d3a;
+      --accent-light: #f5e9d8;
+      --accent-dark: #9e5f24;
+      --text-primary: #1a1410;
+      --text-secondary: #6b5c4a;
+      --text-muted: #9e8e7e;
+      /* Simplified semantic colors */
+      --blue: #3a5fa0;
+      --blue-bg: #edf1f9;
+      --blue-border: #b0c0de;
+      --green: #3d7a52;
+      --green-bg: #eaf3ee;
+      --green-border: #9ec8b0;
+      --red: #9e3a3a;
+      --red-bg: #fdf0f0;
+      --red-border: #e8aaaa;
+      --amber: #9a6400;
+      --amber-bg: #fef9ec;
+      --amber-border: #e0c060;
+      --radius: 14px;
+      --radius-sm: 8px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.65;
+      padding: 56px 24px 140px;
+    }
+
+    /* ── Page Header ── */
+    .page-header {
+      max-width: 920px;
+      margin: 0 auto 60px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 24px;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .page-header-left h1 { font-size: 2.1rem; font-weight: 800; color: var(--text-primary); letter-spacing: -0.8px; }
+    .page-header-left .subtitle { font-size: 1rem; color: var(--text-secondary); font-style: italic; margin-top: 4px; }
+    .page-header-right { text-align: right; }
+    .page-header-right .label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); }
+    .page-header-right .timing { font-size: 1.5rem; font-weight: 700; color: var(--accent); }
+
+    /* ── Section wrapper ── */
+    .section { max-width: 920px; margin: 0 auto 100px; }
+    .section-header { display: flex; align-items: center; gap: 16px; margin-bottom: 36px; }
+    .section-badge {
+      display: flex; align-items: center; justify-content: center;
+      width: 40px; height: 40px; border-radius: 50%;
+      font-size: 1rem; font-weight: 700; flex-shrink: 0;
+      background: var(--surface-alt); color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+    .section-title-block h2 { font-size: 1.15rem; font-weight: 700; color: var(--text-primary); letter-spacing: -0.2px; }
+
+    /* ════════════════════════════════════════
+       SECTION A — ABOUT ME (Career Narrative)
+    ════════════════════════════════════════ */
+    .career-theme {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 36px 40px;
+      margin-bottom: 20px;
+    }
+    .career-eyebrow {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .career-statement {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.3;
+      letter-spacing: -0.3px;
+      max-width: 680px;
+    }
+    .career-table-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    .career-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .career-table th {
+      text-align: left;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+      padding: 12px 28px;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      font-weight: 600;
+    }
+    .career-table td {
+      padding: 16px 28px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+      line-height: 1.4;
+    }
+    .career-table tr:last-child td { border-bottom: none; }
+    .career-table td:first-child {
+      font-weight: 700;
+      color: var(--text-primary);
+      width: 220px;
+    }
+    .career-table td:last-child { color: var(--text-secondary); }
+    .career-table tr:last-child td { color: var(--accent-dark); }
+    .career-table tr:last-child td:first-child { color: var(--text-primary); }
+    .personal-aside {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      padding: 14px 20px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .personal-aside span::before { content: '· '; color: var(--border); }
+    .personal-aside span:first-child::before { content: ''; }
+
+    /* ════════════════════════════════════════
+       SECTION B — PORTFOLIO (Project Boxes)
+    ════════════════════════════════════════ */
+    .project-group { margin-bottom: 72px; }
+    .project-group-header {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius) var(--radius) 0 0;
+      padding: 24px 32px 22px;
+      border-bottom: 2px solid var(--border);
+    }
+    .project-number {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .project-title { font-size: 1.25rem; font-weight: 800; color: var(--text-primary); letter-spacing: -0.3px; }
+    .project-context { font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px; }
+
+    /* Stack of project boxes */
+    .project-boxes-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .pbox {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px 36px;
+    }
+
+    /* Section eyebrow (replaces heavy uppercase labels) */
+    .pbox-eyebrow {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+    .pbox-eyebrow.blue { color: var(--blue); }
+    .pbox-eyebrow.green { color: var(--green); }
+    .pbox-eyebrow.red { color: var(--red); }
+    .pbox-eyebrow.amber { color: var(--amber); }
+    .pbox-eyebrow.accent { color: var(--accent-dark); }
+
+    /* Insight headline — the takeaway */
+    .pbox-insight {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.3;
+      letter-spacing: -0.3px;
+      margin-bottom: 28px;
+    }
+
+    /* Supporting body text */
+    .pbox-body {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    /* ── Diagram: Silo flow ── */
+    .silo-flow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+    .silo-row {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .silo-node {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-align: center;
+    }
+    .silo-node .silo-metric {
+      font-size: 0.64rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      display: block;
+      margin-top: 3px;
+    }
+    .silo-node.gap-node {
+      background: var(--red-bg);
+      border-color: var(--red-border);
+      color: var(--red);
+    }
+    .silo-arrow {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-align: center;
+      line-height: 1;
+    }
+    .silo-bottom {
+      background: var(--blue-bg);
+      border: 1px solid var(--blue-border);
+      border-radius: var(--radius-sm);
+      padding: 10px 24px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--blue);
+      text-align: center;
+    }
+
+    /* ── Diagram: Two-layer architecture ── */
+    .arch-diagram {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      margin-bottom: 8px;
+    }
+    .arch-layer {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px 20px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .arch-layer.layer-product {
+      background: var(--surface-alt);
+    }
+    .arch-layer.layer-global {
+      background: var(--blue-bg);
+      border-color: var(--blue-border);
+    }
+    .arch-layer.layer-user {
+      background: var(--green-bg);
+      border-color: var(--green-border);
+    }
+    .arch-layer-label {
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      width: 80px;
+      flex-shrink: 0;
+    }
+    .arch-layer.layer-global .arch-layer-label { color: var(--blue); }
+    .arch-layer.layer-user .arch-layer-label { color: var(--green); }
+    .arch-layer-content strong {
+      display: block;
+      font-size: 0.88rem;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+    .arch-layer-content span {
+      font-size: 0.76rem;
+      color: var(--text-secondary);
+    }
+    .arch-connector {
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin: -4px 0 4px;
+    }
+
+    /* ── Two-column layout ── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } }
+
+    .info-card {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 20px 22px;
+    }
+    .info-card.blue { background: var(--blue-bg); border-color: var(--blue-border); }
+    .info-card.green { background: var(--green-bg); border-color: var(--green-border); }
+    .info-card.red { background: var(--red-bg); border-color: var(--red-border); }
+    .info-card-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .info-card.blue .info-card-label { color: var(--blue); }
+    .info-card.green .info-card-label { color: var(--green); }
+    .info-card.red .info-card-label { color: var(--red); }
+    .info-card-text {
+      font-size: 0.84rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+    .info-card-text strong { color: var(--text-primary); }
+    .info-card-finding {
+      margin-top: 10px;
+      font-size: 0.8rem;
+      color: var(--text-primary);
+      background: rgba(255,255,255,0.7);
+      border-radius: 6px;
+      padding: 8px 10px;
+      line-height: 1.5;
+    }
+
+    /* ── Callout bar ── */
+    .callout {
+      border-left: 3px solid var(--accent);
+      background: var(--surface-alt);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      padding: 12px 18px;
+      font-size: 0.84rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      margin-top: 16px;
+    }
+    .callout.green { border-left-color: var(--green); background: var(--green-bg); color: #254d37; }
+    .callout.blue  { border-left-color: var(--blue); background: var(--blue-bg); color: #253a60; }
+
+    /* ── Levers list ── */
+    .levers { display: flex; flex-direction: column; gap: 10px; }
+    .lever {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 14px 18px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+    }
+    .lever-num {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--blue);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .lever-body strong { font-size: 0.88rem; color: var(--text-primary); display: block; margin-bottom: 2px; }
+    .lever-body span { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.4; }
+
+    /* ── Hero Impact (big number display) ── */
+    .pbox.impact-hero { background: var(--text-primary); border-color: var(--text-primary); }
+    .pbox.impact-hero .pbox-eyebrow { color: rgba(255,255,255,0.45); }
+    .pbox.impact-hero .pbox-insight { color: #ffffff; }
+    .hero-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 640px) { .hero-metrics { grid-template-columns: 1fr; } }
+    .hero-metric {
+      text-align: center;
+      padding: 40px 24px;
+      background: rgba(255,255,255,0.04);
+    }
+    .hero-num {
+      font-size: 3.8rem;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -2px;
+      color: #ffffff;
+      margin-bottom: 12px;
+    }
+    .hero-label {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.4;
+    }
+    .hero-callout {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-sm);
+      padding: 16px 20px;
+      font-size: 0.84rem;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.55;
+    }
+    .hero-callout strong { color: #ffffff; }
+
+    /* ── Creator AI: Strategy two-col ── */
+    .strategy-col {
+      border-radius: var(--radius-sm);
+      padding: 24px;
+      border: 1px solid var(--border);
+    }
+    .strategy-col.col-blue { background: var(--blue-bg); border-color: var(--blue-border); }
+    .strategy-col.col-green { background: var(--green-bg); border-color: var(--green-border); }
+    .strategy-col-icon { font-size: 1.4rem; margin-bottom: 12px; }
+    .strategy-col-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+    .strategy-col-desc {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      margin-bottom: 12px;
+    }
+    .strategy-moat {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 6px 10px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.6);
+    }
+    .col-blue .strategy-moat { color: var(--blue); }
+    .col-green .strategy-moat { color: var(--green); }
+
+    /* Creator hero — green-tinted ── */
+    .pbox.impact-hero.creator { background: #0f2a1c; border-color: #0f2a1c; }
+
+    /* ── Proof metrics (lighter than full hero) ── */
+    .proof-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .proof-stat {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 28px 20px;
+      text-align: center;
+    }
+    .proof-num {
+      font-size: 2.8rem;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -1.5px;
+      color: var(--green);
+      margin-bottom: 10px;
+    }
+    .proof-label {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+    .proof-supporting {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .proof-sub {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
+    }
+    .proof-sub strong { display: block; color: var(--text-primary); font-size: 0.88rem; margin-bottom: 2px; }
+
+    /* ════════════════════════════════════════════
+       SECTION C — XERO CASE STUDY (Preserved)
+    ════════════════════════════════════════════ */
+    .slide-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .slide-meta {
+      padding: 8px 36px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface-alt);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .slide-num {
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 1.8px;
+      color: var(--text-muted);
+    }
+    .slide-time { font-size: 0.62rem; color: var(--text-muted); }
+    .slide-body { padding: 36px 40px; }
+    .slide-label {
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--section-3-accent, #1f6b72);
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .slide-headline {
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.15;
+      letter-spacing: -0.5px;
+      margin-bottom: 30px;
+    }
+    .slide-headline .hl       { color: #1f6b72; font-style: normal; }
+    .slide-headline .hl-blue  { color: var(--blue); font-style: normal; }
+    .slide-headline .hl-green { color: var(--green); font-style: normal; }
+    .slide-headline .hl-amber { color: #9a6e00; font-style: normal; }
+    .slide-statement {
+      font-size: 2.4rem; font-weight: 700; color: var(--text-primary);
+      line-height: 1.15; letter-spacing: -0.8px; margin-bottom: 32px;
+    }
+    .slide-statement .hl       { color: #1f6b72; font-style: normal; }
+    .slide-statement .hl-blue  { color: var(--blue); font-style: normal; }
+
+    /* Icon cards */
+    --section-3-accent: #1f6b72;
+    --section-3-bg: #dff0f1;
+    --section-1-bg: #e8f0eb;
+    --section-1-accent: #4a7c59;
+    --section-2-bg: #e8edf5;
+    --section-2-accent: #3a5fa0;
+    .icon-grid { display: grid; gap: 16px; }
+    .icon-grid-2 { grid-template-columns: 1fr 1fr; }
+    .icon-grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .icon-grid-4 { grid-template-columns: repeat(4, 1fr); }
+    .icon-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 22px;
+    }
+    .icon-card.tinted-green { background: #e8f0eb; border-color: #4a7c59; }
+    .icon-card.tinted-blue  { background: #e8edf5; border-color: #3a5fa0; }
+    .icon-card.tinted-teal  { background: #dff0f1; border-color: #1f6b72; }
+    .icon-card.tinted-amber { background: #fff8e6; border-color: #c8971a; }
+    .icon-card.tinted-red   { background: #fde8e8; border-color: #c97a7a; }
+    .icon-box {
+      width: 40px; height: 40px; border-radius: 9px;
+      background: var(--surface-alt); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.15rem; margin-bottom: 14px; flex-shrink: 0;
+    }
+    .icon-card-title { font-size: 0.92rem; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+    .icon-card-desc { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.55; }
+    .icon-card-fix { font-size: 0.75rem; color: #1f6b72; font-weight: 700; margin-top: 8px; }
+
+    /* Stats, mission, etc */
+    .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 16px; }
+    .stat-block { background: var(--surface-alt); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 18px; text-align: center; }
+    .stat-number { font-size: 2rem; font-weight: 700; color: var(--accent); line-height: 1.1; }
+    .stat-label { font-size: 0.76rem; color: var(--text-secondary); margin-top: 6px; line-height: 1.4; }
+    .stat-block.danger .stat-number { color: var(--red); }
+    .mission-box { background: var(--surface-alt); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px 20px; margin-bottom: 16px; }
+    .mission-label { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); margin-bottom: 5px; }
+    .mission-text { font-size: 1.1rem; font-weight: 600; color: var(--text-primary); line-height: 1.4; }
+    .metric-chips { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+    .metric-chip { display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 14px; flex: 1; min-width: 140px; }
+    .chip-icon { font-size: 1rem; flex-shrink: 0; }
+    .chip-text { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; }
+    .chip-text strong { display: block; font-size: 0.86rem; color: var(--text-primary); }
+    .funnel-row { display: flex; align-items: stretch; margin-bottom: 10px; }
+    .funnel-stage { flex: 1; padding: 9px 6px; text-align: center; font-size: 0.72rem; font-weight: 600; color: var(--text-primary); background: var(--surface-alt); border: 1px solid var(--border); border-right: none; }
+    .funnel-stage:first-child { border-radius: 6px 0 0 6px; }
+    .funnel-stage:last-child { border-right: 1px solid var(--border); border-radius: 0 6px 6px 0; }
+    .funnel-stage.primary-break { background: var(--red-bg); border-color: var(--red-border); color: var(--red); }
+    .funnel-stage .stage-sub { display: block; font-size: 0.62rem; font-weight: 400; color: var(--text-muted); margin-top: 2px; }
+    .funnel-stage.primary-break .stage-sub { color: #c97a7a; }
+    .threat-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    .threat-chip { background: var(--amber-bg); border: 1px solid var(--amber-border); border-radius: 20px; padding: 4px 12px; font-size: 0.72rem; color: var(--amber); }
+    .scene-card { border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; }
+    .scene-card.scene-1 { background: #e8f0eb; border-color: #4a7c59; }
+    .scene-card.scene-2 { background: #e8edf5; border-color: #3a5fa0; }
+    .scene-label { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 1.8px; font-weight: 700; margin-bottom: 10px; }
+    .scene-1 .scene-label { color: #4a7c59; }
+    .scene-2 .scene-label { color: #3a5fa0; }
+    .scene-big { font-size: 1.2rem; font-weight: 700; color: var(--text-primary); margin-bottom: 10px; }
+    .scene-beats { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 5px; }
+    .scene-beats li { font-size: 0.8rem; color: var(--text-secondary); padding-left: 16px; position: relative; line-height: 1.45; }
+    .scene-beats li::before { content: '→'; position: absolute; left: 0; color: var(--text-muted); font-size: 0.7rem; top: 1px; }
+    .journey-flow { display: flex; gap: 5px; align-items: stretch; margin-bottom: 16px; flex-wrap: wrap; }
+    .journey-step { flex: 1; min-width: 0; display: flex; flex-direction: column; background: var(--surface-alt); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 8px; text-align: center; }
+    .journey-step.pain-step { border-color: #c97a7a; background: var(--red-bg); }
+    .step-icon { font-size: 1.1rem; margin-bottom: 4px; }
+    .step-name { font-size: 0.72rem; font-weight: 700; color: var(--text-primary); }
+    .step-emotion { font-size: 0.64rem; color: var(--text-secondary); margin-top: 2px; }
+    .step-fix { font-size: 0.62rem; color: var(--blue); margin-top: 4px; font-weight: 700; }
+    .layer-stack { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+    .layer-row { background: var(--surface-alt); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 16px; display: flex; align-items: flex-start; gap: 14px; }
+    .layer-row.ai-row { background: var(--blue-bg); border-color: var(--blue-border); }
+    .layer-tag { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: var(--blue); width: 52px; flex-shrink: 0; padding-top: 3px; }
+    .layer-icon { font-size: 1.1rem; flex-shrink: 0; padding-top: 1px; }
+    .layer-text strong { display: block; font-size: 0.84rem; color: var(--text-primary); margin-bottom: 2px; }
+    .layer-text span { font-size: 0.76rem; color: var(--text-secondary); line-height: 1.4; }
+    .hyp-gate { background: var(--amber-bg); border: 1px solid var(--amber-border); border-radius: var(--radius-sm); padding: 10px 14px; font-size: 0.8rem; color: var(--amber); display: flex; align-items: flex-start; gap: 8px; margin-bottom: 14px; line-height: 1.5; }
+    .lift-chips { display: flex; gap: 10px; flex-wrap: wrap; }
+    .lift-chip { display: flex; align-items: center; gap: 8px; border-radius: var(--radius-sm); padding: 10px 16px; flex: 1; border: 1px solid; }
+    .lift-chip.green { background: var(--green-bg); border-color: var(--green-border); }
+    .lift-chip.blue  { background: var(--blue-bg); border-color: var(--blue-border); }
+    .lift-chip.amber { background: var(--amber-bg); border-color: var(--amber-border); }
+    .lift-chip-num { font-size: 1.1rem; font-weight: 700; }
+    .lift-chip.green .lift-chip-num { color: var(--green); }
+    .lift-chip.blue  .lift-chip-num { color: var(--blue); }
+    .lift-chip.amber .lift-chip-num { color: var(--amber); }
+    .lift-chip-label { font-size: 0.74rem; color: var(--text-secondary); line-height: 1.3; }
+    .driver-tree { font-family: 'Courier New', monospace; font-size: 0.76rem; color: var(--text-secondary); background: var(--surface-alt); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px 20px; line-height: 1.95; margin-bottom: 14px; }
+    .c1 { color: var(--green); }
+    .c2 { color: var(--blue); }
+    .c3 { color: var(--amber); }
+    .impact-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin-bottom: 16px; }
+    .impact-table th { background: var(--surface-alt); border-bottom: 1px solid var(--border); padding: 8px 12px; text-align: left; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
+    .impact-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); color: var(--text-secondary); vertical-align: middle; }
+    .impact-table td:first-child { font-weight: 700; color: var(--text-primary); width: 30%; }
+    .impact-table .lift { font-weight: 700; font-size: 0.92rem; }
+    .impact-table tr.p1-row .lift { color: var(--green); }
+    .impact-table tr.p2-row .lift { color: var(--blue); }
+    .impact-table tr.p3-row .lift { color: var(--amber); }
+    .impact-table tr.total-row td { background: var(--surface-alt); font-weight: 700; border-bottom: none; }
+    .impact-table tr.total-row .lift { color: var(--accent); font-size: 1.05rem; }
+    .roadmap-cols { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+    .roadmap-col { background: var(--surface-alt); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 18px; }
+    .rm-phase-label { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); margin-bottom: 2px; }
+    .rm-phase-title { font-size: 0.92rem; font-weight: 700; color: var(--text-primary); margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+    .rm-track { margin-bottom: 10px; }
+    .rm-track:last-child { margin-bottom: 0; }
+    .rm-track-label { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 5px; }
+    .rm-track.p1 .rm-track-label { color: var(--green); }
+    .rm-track.p2 .rm-track-label { color: var(--blue); }
+    .rm-track.p3 .rm-track-label { color: var(--amber); }
+    .rm-track.done .rm-track-label { opacity: 0.4; text-decoration: line-through; }
+    .rm-track ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 3px; }
+    .rm-track ul li { font-size: 0.74rem; color: var(--text-secondary); padding-left: 11px; position: relative; line-height: 1.4; }
+    .rm-track.p1 li::before { content: ''; position: absolute; left: 0; top: 6px; width: 4px; height: 4px; border-radius: 50%; background: var(--green); }
+    .rm-track.p2 li::before { content: ''; position: absolute; left: 0; top: 6px; width: 4px; height: 4px; border-radius: 50%; background: var(--blue); }
+    .rm-track.p3 li::before { content: ''; position: absolute; left: 0; top: 6px; width: 4px; height: 4px; border-radius: 50%; background: var(--amber); }
+    .rm-track.done li::before { background: var(--text-muted); }
+    .exec-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+    .exec-card { background: var(--surface-alt); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 18px; }
+    .exec-label { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); margin-bottom: 10px; }
+    .exec-items { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+    .exec-items li { font-size: 0.78rem; color: var(--text-secondary); padding-left: 12px; position: relative; line-height: 1.4; }
+    .exec-items li::before { content: ''; position: absolute; left: 0; top: 6px; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
+    .week1-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .week1-card { background: var(--surface-alt); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 18px; display: flex; gap: 14px; align-items: flex-start; }
+    .w1-icon { font-size: 1.4rem; flex-shrink: 0; }
+    .w1-content strong { display: block; font-size: 0.88rem; color: var(--text-primary); margin-bottom: 4px; }
+    .w1-content span { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.5; }
+
+    /* pbox-callout preserved for Xero slides */
+    .pbox-callout { background: var(--surface-alt); border-left: 3px solid var(--accent); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 10px 14px; font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5; }
+
+    /* ── Footer ── */
+    .page-footer { max-width: 920px; margin: 40px auto 0; padding-top: 20px; border-top: 1px solid var(--border); font-size: 0.78rem; color: var(--text-muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    .footer-note { font-style: italic; }
+
+    /* ════════════════════════════════════════════
+       SCROLL-TO-REVEAL
+    ════════════════════════════════════════════ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-stagger > * {
+      opacity: 0; transform: translateY(18px);
+      transition: opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal-stagger.visible > *:nth-child(1) { transition-delay: 0.05s; opacity: 1; transform: none; }
+    .reveal-stagger.visible > *:nth-child(2) { transition-delay: 0.11s; opacity: 1; transform: none; }
+    .reveal-stagger.visible > *:nth-child(3) { transition-delay: 0.17s; opacity: 1; transform: none; }
+    .reveal-stagger.visible > *:nth-child(4) { transition-delay: 0.23s; opacity: 1; transform: none; }
+    .reveal-stagger.visible > *:nth-child(5) { transition-delay: 0.29s; opacity: 1; transform: none; }
+    .reveal-stagger.visible > *:nth-child(6) { transition-delay: 0.35s; opacity: 1; transform: none; }
+
+    /* Section C: cinematic scroll */
+    .section-c .slide-card { margin-bottom: 75vh; }
+    .section-c .slide-body { zoom: 1.35; }
+
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════
+       PAGE HEADER
+  ════════════════════════ -->
+  <div class="page-header">
+    <div class="page-header-left">
+      <h1>Richard Wu</h1>
+      <div class="subtitle">Product Manager · Meta · Craft Interview</div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════
+       SECTION A — ABOUT ME
+  ════════════════════════════════ -->
+  <div class="section section-a">
+    <div class="section-header">
+      <div class="section-badge">A</div>
+      <div class="section-title-block">
+        <h2>About Me</h2>
+      </div>
+    </div>
+
+    <!-- Career theme -->
+    <div class="career-theme reveal">
+      <div class="career-eyebrow">Career Theme</div>
+      <div class="career-statement">I build AI-powered products that help people make better decisions — about their security, their attention, and their creative work.</div>
+    </div>
+
+    <!-- Career table -->
+    <div class="career-table-wrap reveal">
+      <table class="career-table">
+        <thead>
+          <tr>
+            <th>Company</th>
+            <th>Where I Grew</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Tend</td>
+            <td>End to end ownership across hardware, firmware, computer vision, cloud, mobile</td>
+          </tr>
+          <tr>
+            <td>Chamberlain</td>
+            <td>P&L ownership</td>
+          </tr>
+          <tr>
+            <td>Meta · Notifications</td>
+            <td>Shipping ML and LLM4Rec at scale</td>
+          </tr>
+          <tr>
+            <td>Meta · Creators (now)</td>
+            <td>0->1 Conversational AI</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Personal (subordinate) -->
+    <div class="personal-aside reveal">
+      <span>Wife and 2yo son in the Sunset</span>
+      <span>Board games — Gloomhaven, Root</span>
+      <span>Red wine — Cab Sauv, Syrah, GSM</span>
+      <span>UCLA sports</span>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════
+       SECTION B — PORTFOLIO
+  ════════════════════════════════ -->
+  <div class="section section-b">
+    <div class="section-header">
+      <div class="section-badge">B</div>
+      <div class="section-title-block">
+        <h2>Product Portfolio</h2>
+      </div>
+    </div>
+
+    <!-- ── PROJECT 1: NOTIFICATIONS ── -->
+    <div class="project-group reveal">
+      <div class="project-group-header">
+        <div class="project-number">Project 1 · Meta</div>
+        <div class="project-title">Rebuilding the FB Notifications ML System</div>
+      </div>
+      <div class="project-boxes-stack">
+
+        <!-- CHALLENGE -->
+        <div class="pbox">
+          <div class="pbox-eyebrow red">Challenge</div>
+          <div class="pbox-insight">20+ teams. No shared governance. A decade of eroding trust.</div>
+          <div class="silo-flow">
+            <div class="silo-row">
+              <div class="silo-node">Groups<span class="silo-metric">→ Visitation</span></div>
+              <div class="silo-node">Marketplace<span class="silo-metric">→ Listings</span></div>
+              <div class="silo-node">Events<span class="silo-metric">→ RSVPs</span></div>
+              <div class="silo-node">Gaming<span class="silo-metric">→ Sessions</span></div>
+              <div class="silo-node">Dating<span class="silo-metric">→ Matches</span></div>
+            </div>
+            <div class="silo-arrow">each team optimizing for its own metric · no one owns net user experience</div>
+            <div class="silo-node gap-node">Net UX → Nobody</div>
+          </div>
+        </div>
+
+        <!-- BREAKTHROUGH -->
+        <div class="pbox">
+          <div class="pbox-eyebrow blue">Breakthrough</div>
+          <div class="pbox-insight">We proved quality mattered more than volume — and turned a platform into a marketplace.</div>
+          <div class="two-col">
+            <div class="info-card">
+              <div class="info-card-label">Persistent Survey</div>
+              <div class="info-card-text">"Do you want this notification?" — launched at scale with UXR &amp; data science.</div>
+              <div class="info-card-finding">📌 Higher volume + lower quality <strong>regressed visitation over 3 months.</strong> Quality was the lever, not volume.</div>
+            </div>
+            <div class="info-card blue">
+              <div class="info-card-label">Marketplace Vision</div>
+              <div class="info-card-text">Notifications as a <strong>closed marketplace</strong> — teams compete for a limited pool of user attention.</div>
+              <div class="info-card-finding">💡 Users don't care which team sent it. They want <strong>the most useful one.</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- EXECUTION -->
+        <div class="pbox">
+          <div class="pbox-eyebrow accent">Execution</div>
+          <div class="pbox-insight">Teams feared losing control of their growth levers. We gave them a better system.</div>
+          <div class="two-col">
+            <div>
+              <div class="info-card-label" style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">Two-Layer Architecture</div>
+              <div class="arch-diagram">
+                <div class="arch-layer layer-product">
+                  <div class="arch-layer-label">Layer 1</div>
+                  <div class="arch-layer-content">
+                    <strong>Product-level ranking</strong>
+                    <span>Each team ranks its own candidates — product context preserved</span>
+                  </div>
+                </div>
+                <div class="arch-connector">↓ top candidates compete</div>
+                <div class="arch-layer layer-global">
+                  <div class="arch-layer-label">Layer 2</div>
+                  <div class="arch-layer-content">
+                    <strong>Global ranking</strong>
+                    <span>Optimize for visitation + quality across all teams</span>
+                  </div>
+                </div>
+                <div class="arch-connector">↓ winner selected</div>
+                <div class="arch-layer layer-user">
+                  <div class="arch-layer-label">User</div>
+                  <div class="arch-layer-content">
+                    <strong>Best notification wins</strong>
+                    <span>Not most aggressive — most relevant</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="info-card-label" style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">Three Levers, Staged Rollout</div>
+              <div class="levers">
+                <div class="lever">
+                  <div class="lever-num">1</div>
+                  <div class="lever-body">
+                    <strong>Universal volume caps</strong>
+                    <span>Address the problem at the source</span>
+                  </div>
+                </div>
+                <div class="lever">
+                  <div class="lever-num">2</div>
+                  <div class="lever-body">
+                    <strong>Global timing optimization</strong>
+                    <span>Preserve value while reducing sends</span>
+                  </div>
+                </div>
+                <div class="lever">
+                  <div class="lever-num">3</div>
+                  <div class="lever-body">
+                    <strong>Single ranking layer</strong>
+                    <span>Every notification competes on user value, not team priority</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- IMPACT -->
+        <div class="pbox impact-hero">
+          <div class="pbox-eyebrow">Impact</div>
+          <div class="pbox-insight">~6M daily actives unlocked per half. Quality up. Instagram adopted our system.</div>
+          <div class="hero-metrics">
+            <div class="hero-metric">
+              <div class="hero-num">+6M</div>
+              <div class="hero-label">DAU gained per half<br>across multiple halves</div>
+            </div>
+            <div class="hero-metric">
+              <div class="hero-num">↑ Quality</div>
+              <div class="hero-label">Volume fell, trust rebuilt<br>simultaneously</div>
+            </div>
+            <div class="hero-metric">
+              <div class="hero-num">Instagram</div>
+              <div class="hero-label">Adopted our system and<br>survey as quality standard</div>
+            </div>
+          </div>
+          <div class="hero-callout">
+            🔄 <strong>Cultural shift:</strong> product teams stopped treating notifications as isolated sends — and started treating them as a shared marketplace for user attention.
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /project-group notifications -->
+
+
+    <!-- ── PROJECT 2: CREATOR AI ── -->
+    <div class="project-group reveal">
+      <div class="project-group-header">
+        <div class="project-number">Project 2 · Meta · FB Creators</div>
+        <div class="project-title">Creator AI: Help Creators Prioritize What to Make Next</div>
+      </div>
+      <div class="project-boxes-stack">
+
+        <!-- PROBLEM + INSIGHT -->
+        <div class="pbox">
+          <div class="pbox-eyebrow red">Problem &amp; Key Insight</div>
+          <div class="pbox-insight">Coming up with what to make next is creators' #1 job — and no tool was built for it.</div>
+          <div class="two-col">
+            <div class="info-card red">
+              <div class="info-card-label">Why Prior Attempts Failed</div>
+              <div class="info-card-text">
+                No creator targeting — same content shown to all regardless of niche or size.<br><br>
+                Passive Feed surface — creators doom-scrolled instead of getting actionable guidance.
+              </div>
+            </div>
+            <div class="info-card blue">
+              <div class="info-card-label">Key Insight</div>
+              <div class="info-card-text">
+                Creators want <strong>opportunities and thought-starters</strong> — not generated scripts or storyboards. They want the signal; they want creative control over execution.
+              </div>
+              <div class="info-card-finding">🎯 Target: mid-tier creators (100K–1M). They have reach, audience signals, and an unsolved content strategy problem.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STRATEGY -->
+        <div class="pbox">
+          <div class="pbox-eyebrow blue">Strategy</div>
+          <div class="pbox-insight">Two pillars — both built on data only FB has.</div>
+          <div class="two-col">
+            <div class="strategy-col col-blue">
+              <div class="strategy-col-icon">🔭</div>
+              <div class="strategy-col-title">Opportunity Scout</div>
+              <div class="strategy-col-desc">Proactively surface content opportunities from own outperforming content, audience signals, niche trends, and content arbitrage.</div>
+              <div class="strategy-moat">🔒 Moat: creator + ecosystem data — only FB can do this</div>
+            </div>
+            <div class="strategy-col col-green">
+              <div class="strategy-col-icon">💬</div>
+              <div class="strategy-col-title">Brainstorm</div>
+              <div class="strategy-col-desc">Generate personalized content and ingredient ideas — tuned to each creator's niche, style, tone, and voice.</div>
+              <div class="strategy-moat">🔒 Moat: past performance data + what works on FB specifically</div>
+            </div>
+          </div>
+          <div class="callout blue">
+            <strong>Leadership alignment:</strong> Built a full end-to-end prototype with real recommendations for my manager's own creator account. Presented to directors across product, design, engineering, and data science alongside UXR quotes. Prototype won the room.
+          </div>
+        </div>
+
+        <!-- PROOF -->
+        <div class="pbox">
+          <div class="pbox-eyebrow green">Proof</div>
+          <div class="pbox-insight">Strong PMF signal across both pillars.</div>
+          <div class="proof-grid">
+            <div class="proof-stat">
+              <div class="proof-num">60%</div>
+              <div class="proof-label">Want Rate — creators actively requested the tool</div>
+            </div>
+            <div class="proof-stat">
+              <div class="proof-num">35%</div>
+              <div class="proof-label">D7 Retention — strong for a utility product</div>
+            </div>
+            <div class="proof-stat">
+              <div class="proof-num">65%</div>
+              <div class="proof-label">of all prompts were ideation requests</div>
+            </div>
+          </div>
+          <div class="proof-supporting">
+            <div class="proof-sub">
+              <strong>AI Eval Scores</strong>
+              Personalization 80% · Actionability +80% · Reasoning +70% · Diversity +84%
+            </div>
+            <div class="proof-sub">
+              <strong>Creator Feedback</strong>
+              90% positive on ideas. Top signal: own content + audience demand most valuable. Ecosystem opportunities required hyper-personalization to land.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /project-group creator-ai -->
+
+  </div><!-- /section-b -->
+
+
+  <!-- ═══════════════════════════════════════
+       SECTION C — XERO CASE STUDY
+  ════════════════════════════════════════ -->
+  <div class="section section-c">
+    <div class="section-header">
+      <div class="section-badge">C</div>
+      <div class="section-title-block">
+        <h2>Case Study: Xero — Accelerating Invoice Creation Growth</h2>
+      </div>
+    </div>
+
+
+    <!-- C1: BUSINESS CONTEXT -->
+    <div class="slide-card">
+      <div class="slide-body">
+        <div class="slide-label">1. Business Context</div>
+        <div class="slide-headline">Invoice creation is <em class="hl">Xero's growth engine</em>, and it's stalling</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
+          <div>
+            <div style="font-size:0.62rem;text-transform:uppercase;letter-spacing:1.8px;color:#1f6b72;font-weight:700;margin-bottom:10px;">Why Easy Invoice Creation Matters</div>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <div class="icon-card" style="padding:12px 14px;flex-direction:row;align-items:center;gap:10px;display:flex;">
+                <span style="font-size:1.1rem;flex-shrink:0;">🔒</span>
+                <div><div class="icon-card-title" style="margin-bottom:2px;font-size:0.85rem;">Retention</div><div class="icon-card-desc">Reduces admin friction and makes Xero stickier</div></div>
+              </div>
+              <div class="icon-card" style="padding:12px 14px;flex-direction:row;align-items:center;gap:10px;display:flex;">
+                <span style="font-size:1.1rem;flex-shrink:0;">🌱</span>
+                <div><div class="icon-card-title" style="margin-bottom:2px;font-size:0.85rem;">Acquisition</div><div class="icon-card-desc">Attracts clients wanting an end-to-end solution</div></div>
+              </div>
+              <div class="icon-card" style="padding:12px 14px;flex-direction:row;align-items:center;gap:10px;display:flex;">
+                <span style="font-size:1.1rem;flex-shrink:0;">💰</span>
+                <div><div class="icon-card-title" style="margin-bottom:2px;font-size:0.85rem;">Revenue</div><div class="icon-card-desc">Subscription and transactional revenue</div></div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:0.62rem;text-transform:uppercase;letter-spacing:1.8px;color:#9e4a4a;font-weight:700;margin-bottom:10px;">Risks of Invoice Creation Stagnation</div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div style="background:#fff6f6;border:1px solid #e8a0a0;border-radius:var(--radius-sm);padding:14px 16px;">
+                <div style="font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#9e4a4a;margin-bottom:6px;">Client Risks</div>
+                <div style="font-size:0.8rem;color:var(--text-secondary);line-height:1.5;">Stagnant cash flows · Administrative burnout</div>
+              </div>
+              <div style="background:#fff6f6;border:1px solid #e8a0a0;border-radius:var(--radius-sm);padding:14px 16px;">
+                <div style="font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#9e4a4a;margin-bottom:6px;">Business Risks</div>
+                <div style="font-size:0.8rem;color:var(--text-secondary);line-height:1.5;">Software churn reduces revenue · 3P partners leave ecosystem</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mission-box">
+          <div class="mission-label">Mission</div>
+          <div class="mission-text">Eliminate the gap between billable work done and invoices created in Xero, as measured by total invoices created, while maintaining invoice-to-payment rate.</div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- C2: TARGET CUSTOMERS -->
+    <div class="slide-card">
+      <div class="slide-body">
+        <div class="slide-label">2. Target Customers</div>
+        <div class="slide-headline">Segment by <em class="hl">pre-invoice workflow</em>, not by vertical</div>
+        <div class="icon-grid icon-grid-3" style="margin-bottom:18px;">
+          <div class="icon-card tinted-teal">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+              <div class="icon-box" style="background:#b3dde0;border-color:#1f6b72;flex-shrink:0;">🔨</div>
+              <div class="icon-card-title" style="margin-bottom:0;">Field-Based Operators</div>
+            </div>
+            <div class="icon-card-desc" style="margin-bottom:8px;">Plumbers · Electricians · HVAC · Photographers</div>
+            <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:4px;">
+              <li style="font-size:0.75rem;color:#1f6b72;padding-left:12px;position:relative;line-height:1.4;"><span style="position:absolute;left:0;top:5px;width:5px;height:5px;border-radius:50%;background:#1f6b72;display:inline-block;"></span>Work performed away from desk</li>
+              <li style="font-size:0.75rem;color:#1f6b72;padding-left:12px;position:relative;line-height:1.4;"><span style="position:absolute;left:0;top:5px;width:5px;height:5px;border-radius:50%;background:#1f6b72;display:inline-block;"></span>High mobile dependence</li>
+              <li style="font-size:0.75rem;color:#1f6b72;padding-left:12px;position:relative;line-height:1.4;"><span style="position:absolute;left:0;top:5px;width:5px;height:5px;border-radius:50%;background:#1f6b72;display:inline-block;"></span>Costs from diverse sources: hardware stores, subcontractors, credit cards</li>
+            </ul>
+          </div>
+          <div class="icon-card">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+              <div class="icon-box" style="flex-shrink:0;">📊</div>
+              <div class="icon-card-title" style="margin-bottom:0;">Project-Based Services</div>
+            </div>
+            <div class="icon-card-desc" style="margin-bottom:8px;">Agencies · Consultants · Design Firms</div>
+            <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:4px;">
+              <li style="font-size:0.75rem;color:var(--text-secondary);padding-left:12px;position:relative;line-height:1.4;"><span style="position:absolute;left:0;top:5px;width:5px;height:5px;border-radius:50%;background:var(--text-muted);display:inline-block;"></span>Each client engagement is unique</li>
+              <li style="font-size:0.75rem;color:var(--text-secondary);padding-left:12px;position:relative;line-height:1.4;"><span style="position:absolute;left:0;top:5px;width:5px;height:5px;border-radius:50%;background:var(--text-muted);display:inline-block;"></span>Variable billing: hourly, fixed, milestone, overages</li>
+              <li style="font-size:0.75rem;color:var(--text-secondary);padding-left:12px;position:relative;line-height:1.4;"><span style="position:absolute;left:0;top:5px;width:5px;height:5px;border-radius:50%;background:var(--text-muted);display:inline-block;"></span>Multiple contributors to reconcile</li>
+            </ul>
+          </div>
+          <div class="icon-card">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+              <div class="icon-box" style="flex-shrink:0;">💼</div>
+              <div class="icon-card-title" style="margin-bottom:0;">High-Frequency Solo Operators</div>
+            </div>
+            <div class="icon-card-desc" style="margin-bottom:8px;">Freelancers · Tutors · Coaches · Creators</div>
+            <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:4px;">
+              <li style="font-size:0.75rem;color:var(--text-secondary);padding-left:12px;position:relative;line-height:1.4;"><span style="position:absolute;left:0;top:5px;width:5px;height:5px;border-radius:50%;background:var(--text-muted);display:inline-block;"></span>Repetitive, frequent invoicing</li>
+              <li style="font-size:0.75rem;color:var(--text-secondary);padding-left:12px;position:relative;line-height:1.4;"><span style="position:absolute;left:0;top:5px;width:5px;height:5px;border-radius:50%;background:var(--text-muted);display:inline-block;"></span>Lightweight systems</li>
+              <li style="font-size:0.75rem;color:var(--text-secondary);padding-left:12px;position:relative;line-height:1.4;"><span style="position:absolute;left:0;top:5px;width:5px;height:5px;border-radius:50%;background:var(--text-muted);display:inline-block;"></span>Admin burden compounds quickly at scale</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- C3: CUSTOMER JOURNEY -->
+    <div class="slide-card">
+      <div class="slide-body">
+        <div class="slide-label">3. Invoice Creation Customer Journey</div>
+        <div class="slide-headline">The pain accumulates <em class="hl">before Xero opens</em></div>
+        <div class="journey-flow" style="margin-bottom:18px;flex-wrap:nowrap;">
+          <div class="journey-step" style="background:#fef5f3;border-color:#e8c8c8;">
+            <div class="step-icon">📋</div>
+            <div class="step-name">Quote created</div>
+            <div class="step-emotion">😊 Optimistic</div>
+            <div class="step-fix" style="color:var(--text-muted);">Xero, GDocs</div>
+          </div>
+          <div class="journey-step" style="background:#fef5f3;border-color:#e8c8c8;">
+            <div class="step-icon">✉️</div>
+            <div class="step-name">Quote accepted</div>
+            <div class="step-emotion">⚡ High energy</div>
+            <div class="step-fix" style="color:var(--text-muted);">Email, text</div>
+          </div>
+          <div class="journey-step pain-step" style="background:#fde0d0;border-color:#9e4a4a;">
+            <div class="step-icon">⏱️</div>
+            <div class="step-name">Track work</div>
+            <div class="step-emotion">😬 Distracted</div>
+            <div class="step-fix" style="color:#9e4a4a;">Harvest · Dext · Hubdoc</div>
+          </div>
+          <div class="journey-step" style="background:#fef9e7;border-color:#d4a017;border-width:1.5px;">
+            <div class="step-icon">🔄</div>
+            <div class="step-name">Scope change</div>
+            <div class="step-emotion">🤝 Verbal only</div>
+            <div class="step-fix" style="color:#a07010;font-weight:700;">Undocumented</div>
+          </div>
+          <div class="journey-step" style="background:#fef5f3;border-color:#e8c8c8;">
+            <div class="step-icon">🤝</div>
+            <div class="step-name">Work complete</div>
+            <div class="step-emotion">✅ Accomplished</div>
+            <div class="step-fix" style="color:var(--text-muted);">Handshake</div>
+          </div>
+          <div class="journey-step pain-step" style="background:#fde0d0;border-color:#9e4a4a;">
+            <div class="step-icon">📦</div>
+            <div class="step-name">Invoice prep</div>
+            <div class="step-emotion">😫 Overwhelmed</div>
+            <div class="step-fix" style="color:#9e4a4a;font-weight:700;">← Biggest pain</div>
+          </div>
+          <div class="journey-step pain-step" style="background:#fde8e8;border-color:#c97a7a;">
+            <div class="step-icon">📝</div>
+            <div class="step-name">Create invoice</div>
+            <div class="step-emotion">😤 Tedious</div>
+            <div class="step-fix" style="color:#c97a7a;">In Xero</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px;">
+          <div style="background:#fde0d0;border:1px solid #c8906a;border-radius:8px;padding:10px 12px;">
+            <div style="font-size:0.7rem;font-weight:700;color:#9e4a4a;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px;">Track A — Materials</div>
+            <div style="font-size:0.72rem;color:#7a3520;">Receipts from supply house runs, field workers, credit card charges — no consistent path into the draft. Data exists; it's just scattered.</div>
+          </div>
+          <div style="background:#fef9e7;border:1px solid #d4a017;border-radius:8px;padding:10px 12px;">
+            <div style="font-size:0.7rem;font-weight:700;color:#a07010;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px;">Track C — Scope changes</div>
+            <div style="font-size:0.72rem;color:#7a5810;">Client asks for extras on-site — agreed verbally, never written down. By invoice time, context is gone and the work goes unbilled or disputed.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- C4: WHY FLATTENED -->
+    <div class="slide-card">
+      <div class="slide-body">
+        <div class="slide-label">4. Why Invoice Creation Flattened</div>
+        <div class="icon-grid icon-grid-2" style="margin-bottom:18px;">
+          <div class="icon-card tinted-amber">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+              <div class="icon-box" style="background:#ffe8a0;border-color:#c8971a;">📈</div>
+              <div class="icon-card-title" style="margin-bottom:0;">Growth Ceiling</div>
+            </div>
+            <div class="icon-card-title" style="font-size:0.85rem;margin-bottom:6px;">Simple invoicing has reached saturation</div>
+            <div class="icon-card-desc">Invoicing grew steadily, then flatlined. All SMBs with simple invoicing needs may already use Xero. Growth now requires unlocking more complex scenarios.</div>
+          </div>
+          <div class="icon-card tinted-red">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+              <div class="icon-box" style="background:#fde8e8;border-color:#c97a7a;">📉</div>
+              <div class="icon-card-title" style="margin-bottom:0;">Retention Erosion</div>
+            </div>
+            <div class="icon-card-title" style="font-size:0.85rem;margin-bottom:6px;">Habitual invoicers are churning out</div>
+            <div class="icon-card-desc">Xero continues to acquire new users, but invoice creation frequency declines among existing users. New acquisition masks the drop. Net effect: flat growth.</div>
+          </div>
+        </div>
+        <div class="pbox-callout"><span style="color:var(--text-muted);font-size:0.75rem;">→ See Appendix B for full root cause analysis · Appendix C for Xero's competitive moats</span></div>
+      </div>
+    </div>
+
+
+    <!-- C5: VISION -->
+    <div class="slide-card">
+      <div class="slide-body">
+        <div class="slide-label">5. Product Vision</div>
+        <div class="slide-statement">Xero turns <em class="hl">billable work</em> into <em class="hl">invoiced work</em>, automatically.</div>
+        <svg viewBox="0 0 520 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;border-radius:12px;display:block;">
+          <rect width="520" height="280" fill="#dff0f1" rx="12"/>
+          <rect x="260" y="0" width="260" height="280" fill="#e8f0eb"/>
+          <rect x="508" y="0" width="12" height="280" fill="#e8f0eb"/>
+          <rect x="0" y="185" width="260" height="95" fill="#c8e6c9"/>
+          <ellipse cx="215" cy="50" rx="28" ry="28" fill="#f9d06a" opacity="0.85"/>
+          <line x1="215" y1="14" x2="215" y2="6" stroke="#f9d06a" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="215" y1="86" x2="215" y2="94" stroke="#f9d06a" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="179" y1="50" x2="171" y2="50" stroke="#f9d06a" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="251" y1="50" x2="259" y2="50" stroke="#f9d06a" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="190" y1="25" x2="184" y2="19" stroke="#f9d06a" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="240" y1="75" x2="246" y2="81" stroke="#f9d06a" stroke-width="2.5" stroke-linecap="round"/>
+          <polygon points="52,148 130,88 208,148" fill="#90a4ae" stroke="#607d8b" stroke-width="2"/>
+          <rect x="67" y="148" width="126" height="72" fill="#eceff1" stroke="#b0bec5" stroke-width="1.5"/>
+          <rect x="111" y="178" width="38" height="42" fill="#a5d6a7" stroke="#81c784" stroke-width="1.5" rx="3"/>
+          <rect x="77" y="160" width="32" height="28" fill="#b3e5fc" stroke="#81d4fa" stroke-width="1.5" rx="2"/>
+          <line x1="93" y1="160" x2="93" y2="188" stroke="#81d4fa" stroke-width="1"/>
+          <line x1="77" y1="174" x2="109" y2="174" stroke="#81d4fa" stroke-width="1"/>
+          <rect x="151" y="160" width="32" height="28" fill="#b3e5fc" stroke="#81d4fa" stroke-width="1.5" rx="2"/>
+          <line x1="167" y1="160" x2="167" y2="188" stroke="#81d4fa" stroke-width="1"/>
+          <line x1="151" y1="174" x2="183" y2="174" stroke="#81d4fa" stroke-width="1"/>
+          <circle cx="34" cy="162" r="12" fill="#6d4c41"/>
+          <ellipse cx="34" cy="152" rx="14" ry="7.5" fill="#f9a825"/>
+          <rect x="27" y="152" width="14" height="4" fill="#f9a825" rx="1"/>
+          <rect x="23" y="174" width="22" height="30" fill="#1565c0" rx="3"/>
+          <rect x="19" y="176" width="9" height="22" fill="#1565c0" rx="2"/>
+          <rect x="45" y="176" width="9" height="22" fill="#1565c0" rx="2"/>
+          <rect x="24" y="204" width="8" height="16" fill="#37474f" rx="2"/>
+          <rect x="36" y="204" width="8" height="16" fill="#37474f" rx="2"/>
+          <rect x="22" y="196" width="24" height="5" fill="#795548" rx="1"/>
+          <rect x="8" y="8" width="70" height="24" fill="rgba(0,0,0,0.22)" rx="6"/>
+          <text x="43" y="24.5" text-anchor="middle" font-family="'Plus Jakarta Sans',sans-serif" font-size="12" fill="#ffffff" font-weight="700">4:00 PM</text>
+          <rect x="168" y="8" width="84" height="24" fill="#2e7d32" rx="6" opacity="0.9"/>
+          <text x="210" y="24.5" text-anchor="middle" font-family="'Plus Jakarta Sans',sans-serif" font-size="10.5" fill="#ffffff" font-weight="700">Job closed ✓</text>
+          <g transform="translate(-300, 0)">
+            <rect x="630" y="20" width="124" height="230" fill="#212121" rx="20" stroke="#424242" stroke-width="2"/>
+            <rect x="637" y="32" width="110" height="206" fill="#fafafa" rx="13"/>
+            <rect x="671" y="20" width="42" height="10" fill="#212121" rx="0"/>
+            <rect x="675" y="20" width="34" height="8" fill="#303030" rx="4"/>
+            <rect x="643" y="40" width="98" height="148" fill="#ffffff" rx="6" stroke="#e0e0e0" stroke-width="1"/>
+            <rect x="643" y="40" width="98" height="18" fill="#1a5276" rx="6"/>
+            <rect x="643" y="49" width="98" height="9" fill="#1a5276"/>
+            <text x="692" y="53" text-anchor="middle" font-family="'Plus Jakarta Sans',sans-serif" font-size="8" fill="#ffffff" font-weight="700">INVOICE #1042</text>
+            <text x="649" y="70" font-family="'Plus Jakarta Sans',sans-serif" font-size="6.5" fill="#616161">Johnson Renovation</text>
+            <line x1="649" y1="74" x2="735" y2="74" stroke="#eeeeee" stroke-width="0.8"/>
+            <text x="649" y="84" font-family="'Plus Jakarta Sans',sans-serif" font-size="6" fill="#9e9e9e">Labour — 18 hrs</text>
+            <text x="733" y="84" text-anchor="end" font-family="'Plus Jakarta Sans',sans-serif" font-size="6" fill="#424242" font-weight="600">$1,350</text>
+            <text x="649" y="95" font-family="'Plus Jakarta Sans',sans-serif" font-size="6" fill="#9e9e9e">Materials</text>
+            <text x="733" y="95" text-anchor="end" font-family="'Plus Jakarta Sans',sans-serif" font-size="6" fill="#424242" font-weight="600">$480</text>
+            <text x="649" y="106" font-family="'Plus Jakarta Sans',sans-serif" font-size="6" fill="#9e9e9e">Site travel</text>
+            <text x="733" y="106" text-anchor="end" font-family="'Plus Jakarta Sans',sans-serif" font-size="6" fill="#424242" font-weight="600">$60</text>
+            <line x1="649" y1="110" x2="735" y2="110" stroke="#eeeeee" stroke-width="0.8"/>
+            <text x="649" y="120" font-family="'Plus Jakarta Sans',sans-serif" font-size="7" fill="#1a5276" font-weight="700">Total</text>
+            <text x="733" y="120" text-anchor="end" font-family="'Plus Jakarta Sans',sans-serif" font-size="7.5" fill="#1a5276" font-weight="700">$1,890</text>
+            <rect x="649" y="130" width="84" height="24" fill="#2e7d32" rx="6"/>
+            <text x="691" y="146" text-anchor="middle" font-family="'Plus Jakarta Sans',sans-serif" font-size="9.5" fill="#ffffff" font-weight="700">Send ✓</text>
+            <rect x="643" y="162" width="98" height="34" fill="#e8f5e9" stroke="#a5d6a7" stroke-width="1" rx="7"/>
+            <text x="692" y="178" text-anchor="middle" font-family="'Plus Jakarta Sans',sans-serif" font-size="8.5" fill="#2e7d32" font-weight="700">Invoice sent ✓</text>
+            <text x="692" y="191" text-anchor="middle" font-family="'Plus Jakarta Sans',sans-serif" font-size="7" fill="#388e3c">Client notified</text>
+            <rect x="568" y="8" width="70" height="24" fill="rgba(0,0,0,0.22)" rx="6"/>
+            <text x="603" y="24.5" text-anchor="middle" font-family="'Plus Jakarta Sans',sans-serif" font-size="12" fill="#ffffff" font-weight="700">5:00 PM</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+
+    <!-- C6: STRATEGY OVERVIEW -->
+    <div class="slide-card">
+      <div class="slide-body">
+        <div class="slide-label">6. Strategy</div>
+        <div class="slide-headline"><em class="hl">Three pillars</em></div>
+        <div class="icon-grid icon-grid-3">
+          <div class="icon-card">
+            <div class="icon-card-title" style="font-size:0.75rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;">Pillar 1</div>
+            <div class="icon-card-title" style="font-size:1.05rem;color:#4a7c59;">Fix the Fundamentals</div>
+            <div class="icon-card-desc">Stop frequency erosion by reducing creation friction.</div>
+          </div>
+          <div class="icon-card">
+            <div class="icon-card-title" style="font-size:0.75rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;">Pillar 2</div>
+            <div class="icon-card-title" style="font-size:1.05rem;color:#3a5fa0;">Expense Automation</div>
+            <div class="icon-card-desc">Ensure every cost is captured and attributed correctly.</div>
+          </div>
+          <div class="icon-card">
+            <div class="icon-card-title" style="font-size:0.75rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;">Pillar 3</div>
+            <div class="icon-card-title" style="font-size:1.05rem;color:#9a6e00;">Reduce Procrastination</div>
+            <div class="icon-card-desc">Remove dread; surface work before it's forgotten.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- C7: PILLAR 1 -->
+    <div class="slide-card">
+      <div class="slide-body">
+        <div class="slide-label">7. Pillar 1: Fix the Fundamentals</div>
+        <div class="slide-headline">Stop the habit from <em class="hl-green">breaking under friction</em></div>
+        <div class="icon-grid icon-grid-4" style="margin-bottom:18px;">
+          <div class="icon-card">
+            <div class="icon-box">🖱️</div>
+            <div class="icon-card-title">Click-heavy flow</div>
+            <div class="icon-card-desc">Too many steps, screen transitions, mandatory code fields for simple invoices.</div>
+            <div class="icon-card-fix">→ Simple Mode: code optional, fewer windows</div>
+          </div>
+          <div class="icon-card">
+            <div class="icon-box">📦</div>
+            <div class="icon-card-title">No bulk operations</div>
+            <div class="icon-card-desc">Selections lost when paginating. High-volume billers resort to spreadsheets.</div>
+            <div class="icon-card-fix">→ Bulk send to multiple customers</div>
+          </div>
+          <div class="icon-card">
+            <div class="icon-box">📱</div>
+            <div class="icon-card-title">Mobile gaps</div>
+            <div class="icon-card-desc">Can't create invoices for new customers. No invoice preview before send.</div>
+            <div class="icon-card-fix">→ Mobile parity + Simple Mode port</div>
+          </div>
+          <div class="icon-card">
+            <div class="icon-box">🔁</div>
+            <div class="icon-card-title">No recurring during edit</div>
+            <div class="icon-card-desc">Setting up recurring billing requires leaving the invoice flow entirely.</div>
+            <div class="icon-card-fix">→ Enable recurring inline</div>
+          </div>
+        </div>
+        <div class="hyp-gate">
+          <span>⚡</span>
+          <span><strong>Why this ships first:</strong> P2 is a 9–12 month build. Without P1, Xero bleeds habitual invoicers in the interim. For simpler-workflow users, P1 is the complete solution — not a bridge.</span>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- C8: PILLAR 2 -->
+    <div class="slide-card">
+      <div class="slide-body">
+        <div class="slide-label">8. Pillar 2: Expense Reporting Automation</div>
+        <div class="slide-headline">Every cost. <em class="hl-blue">Right customer. No manual reconciliation.</em></div>
+        <div class="layer-stack">
+          <div class="layer-row">
+            <div class="layer-tag">Move 1</div>
+            <div class="layer-icon">🔗</div>
+            <div class="layer-text">
+              <strong>Fix the data at source — Ecosystem Integration</strong>
+              <span>Work with partners (Dext, ServiceM8, Harvest, MinuteDock) so customer and job is a selectable field in their apps — passed as metadata when costs sync to Xero. Clean data at entry means no inference required downstream.</span>
+            </div>
+          </div>
+          <div class="layer-row ai-row">
+            <div class="layer-tag" style="color:#3a5fa0;">Move 2</div>
+            <div class="layer-icon">🤖</div>
+            <div class="layer-text">
+              <strong>Catch what slips through — Predictive Customer Engine</strong>
+              <span>When a cost arrives without a tag, AI suggests the correct customer using vendor patterns, timing, active job context, open quotes, and GPS/calendar data. Owner confirms in one tap. Corrections feed a learner file → <strong>compounding accuracy advantage competitors can't replicate.</strong></span>
+            </div>
+          </div>
+        </div>
+        <div class="lift-chips">
+          <div class="lift-chip blue">
+            <span class="lift-chip-num">H1</span>
+            <span class="lift-chip-label">Ecosystem integration via partner agreements + API work</span>
+          </div>
+          <div class="lift-chip green">
+            <span class="lift-chip-num">H2+</span>
+            <span class="lift-chip-label">Predictive Customer Engine — AI accuracy compounds with corrections</span>
+          </div>
+          <div class="metric-chip" style="flex:2;">
+            <span class="chip-icon">🔒</span>
+            <div class="chip-text"><strong>Moat:</strong> Extends the Hubdoc acquisition into the invoice creation workflow — a compounding AI advantage</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- C9: PILLAR 3 -->
+    <div class="slide-card">
+      <div class="slide-body">
+        <div class="slide-label">9. Pillar 3: Reduce Invoice Procrastination</div>
+        <div class="slide-headline">Remove the <em class="hl-amber">dread of starting</em> from scratch</div>
+        <div class="icon-grid icon-grid-2" style="margin-bottom:16px;">
+          <div class="icon-card tinted-amber">
+            <div class="icon-box" style="background:#ffe8a0;border-color:#c8971a;">📄</div>
+            <div class="icon-card-title">Living Draft</div>
+            <div class="icon-card-desc" style="margin-bottom:10px;">As soon as the first cost is assigned to a customer, Xero auto-creates a draft invoice. Costs accumulate in real time as work progresses.</div>
+            <div style="background:rgba(200,151,26,0.12);border-radius:var(--radius-sm);padding:8px 10px;font-size:0.75rem;color:#7a5a10;line-height:1.4;">When the job is done, the invoice is <strong>already assembled</strong> — the owner reviews and sends. Not a task to start; a document to finalise.</div>
+          </div>
+          <div class="icon-card tinted-amber">
+            <div class="icon-box" style="background:#ffe8a0;border-color:#c8971a;">📊</div>
+            <div class="icon-card-title">Unbilled Activity Widget</div>
+            <div class="icon-card-desc" style="margin-bottom:10px;">A persistent widget surfaces accumulated unbilled costs across all active projects. Owners see at a glance what's ready to invoice.</div>
+            <div style="background:rgba(200,151,26,0.12);border-radius:var(--radius-sm);padding:8px 10px;font-size:0.75rem;color:#7a5a10;line-height:1.4;">Turn any project's costs into a Living Draft in one tap — preventing the <strong>gradual accumulation of forgotten billable work.</strong></div>
+          </div>
+        </div>
+        <div class="hyp-gate">
+          <span>⚠️</span>
+          <span><strong>Hypothesis-driven:</strong> H1 start alongside P1. H2 main build contingent on Living Draft adoption. If engagement is low, diagnose before building the Widget on an unused foundation.</span>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- C10: ROADMAP -->
+    <div class="slide-card">
+      <div class="slide-body">
+        <div class="slide-label">10. Roadmap</div>
+        <div class="slide-headline">Foundation first, <em class="hl">then close the gap</em></div>
+        <div class="roadmap-cols">
+          <div class="roadmap-col">
+            <div class="rm-phase-label">H1 · Months 1–6</div>
+            <div class="rm-phase-title">Foundation + Begin</div>
+            <div class="rm-track p1">
+              <div class="rm-track-label">P1: Full effort → Done ✓</div>
+              <ul>
+                <li>Simple Mode (code optional, fewer windows)</li>
+                <li>Enable recurring during edit</li>
+                <li>Bulk invoicing to multiple customers</li>
+                <li>Mobile: new customer creation</li>
+                <li>Mobile: Simple Mode + invoice preview</li>
+              </ul>
+            </div>
+            <div class="rm-track p2" style="margin-top:10px;">
+              <div class="rm-track-label">P2: Begin partner work</div>
+              <ul>
+                <li>Map cost sources per segment</li>
+                <li>Begin ecosystem partner conversations</li>
+                <li>Ensure customer/job is selectable in partner apps</li>
+              </ul>
+            </div>
+            <div class="rm-track p3" style="margin-top:10px;">
+              <div class="rm-track-label">P3: Living Draft — early build</div>
+              <ul>
+                <li>Auto-generate draft on first cost attribution</li>
+                <li>Update draft as new expenses logged</li>
+              </ul>
+            </div>
+          </div>
+          <div class="roadmap-col">
+            <div class="rm-phase-label">H2 · Months 7–12</div>
+            <div class="rm-phase-title">P2 Main Build + P3 Scale</div>
+            <div class="rm-track done">
+              <div class="rm-track-label">P1: No further investment</div>
+            </div>
+            <div class="rm-track p2" style="margin-top:10px;">
+              <div class="rm-track-label">P2: Main Build</div>
+              <ul>
+                <li>Ecosystem integration ships — metadata flows</li>
+                <li>Predictive Customer Engine: AI suggests assignment</li>
+                <li>GPS + calendar context for mobile receipt capture</li>
+                <li>Learner file: corrections improve AI over time</li>
+              </ul>
+            </div>
+            <div class="rm-track p3" style="margin-top:10px;">
+              <div class="rm-track-label">P3: Scale or Reassess</div>
+              <ul>
+                <li>Unbilled Activity Widget (if Living Draft validated)</li>
+                <li>Multi-project cost aggregation</li>
+                <li>Or: resources rebalance → P2 if P3 adoption low</li>
+              </ul>
+            </div>
+          </div>
+          <div class="roadmap-col">
+            <div class="rm-phase-label">Year 2+</div>
+            <div class="rm-phase-title">Compound the Moat</div>
+            <div class="rm-track p2">
+              <div class="rm-track-label">P2: AI accuracy compounds</div>
+              <ul>
+                <li>Learner file accuracy improves with scale</li>
+                <li>Auto-assignment without manual confirmation</li>
+                <li>Competitors can't replicate without correction history</li>
+              </ul>
+            </div>
+            <div class="rm-track p3" style="margin-top:10px;">
+              <div class="rm-track-label">P3 (if validated): Full scale</div>
+              <ul>
+                <li>Unbilled Widget at full feature parity</li>
+                <li>Proactive billing nudges from Xero</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- C11: EXECUTION -->
+    <div class="slide-card">
+      <div class="slide-body">
+        <div class="slide-label">11. Execution</div>
+        <div class="slide-headline">Risks, mitigations, <em class="hl">and how we know it's working</em></div>
+        <div style="font-size:0.62rem;text-transform:uppercase;letter-spacing:1.8px;color:var(--text-muted);margin-bottom:10px;font-weight:700;">Key Risks + Mitigations</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px;">
+          <div style="display:grid;grid-template-columns:40px 1fr 1fr;gap:12px;align-items:start;background:var(--surface-alt);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 16px;">
+            <div style="font-size:0.62rem;font-weight:700;color:#3a5fa0;text-transform:uppercase;letter-spacing:1px;padding-top:3px;">P2</div>
+            <div>
+              <div style="font-size:0.82rem;font-weight:700;color:var(--text-primary);margin-bottom:2px;">Partner Dependency</div>
+              <div style="font-size:0.76rem;color:var(--text-secondary);line-height:1.4;">Ecosystem improvements require partners to update their apps. Cannot be shipped unilaterally.</div>
+            </div>
+            <div style="background:#eaf3ee;border:1px solid #9ec8b0;border-radius:var(--radius-sm);padding:8px 10px;font-size:0.75rem;color:#254d37;line-height:1.4;">Begin partner conversations in H1 in parallel with P1 build. Prioritize the 3–5 integrations covering 80% of target use cases.</div>
+          </div>
+          <div style="display:grid;grid-template-columns:40px 1fr 1fr;gap:12px;align-items:start;background:var(--surface-alt);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 16px;">
+            <div style="font-size:0.62rem;font-weight:700;color:#3a5fa0;text-transform:uppercase;letter-spacing:1px;padding-top:3px;">P2</div>
+            <div>
+              <div style="font-size:0.82rem;font-weight:700;color:var(--text-primary);margin-bottom:2px;">AI Cold Start</div>
+              <div style="font-size:0.76rem;color:var(--text-secondary);line-height:1.4;">Predictive Engine accuracy depends on correction history it doesn't yet have for new users.</div>
+            </div>
+            <div style="background:#eaf3ee;border:1px solid #9ec8b0;border-radius:var(--radius-sm);padding:8px 10px;font-size:0.75rem;color:#254d37;line-height:1.4;">High-confidence classifications auto-assign. Lower-confidence cases surface 2–3 suggested customers for the owner to choose from.</div>
+          </div>
+        </div>
+        <div style="font-size:0.62rem;text-transform:uppercase;letter-spacing:1.8px;color:var(--text-muted);margin-bottom:10px;font-weight:700;">Metrics — For AI features, model evals are the operating metric</div>
+        <table class="impact-table" style="margin-bottom:0;">
+          <thead>
+            <tr><th>Pillar / Item</th><th>Success Metric</th><th>Guardrail</th></tr>
+          </thead>
+          <tbody>
+            <tr class="p1-row"><td>P1 · Simple Mode</td><td>% started invoices successfully sent</td><td>Accounting code error rate</td></tr>
+            <tr class="p1-row"><td>P1 · Bulk Invoicing</td><td>Bulk invoicing usage rate</td><td>Invoice error rate</td></tr>
+            <tr class="p1-row"><td>P1 · Mobile</td><td>Mobile invoice completion rate</td><td>Cross-device completion rate</td></tr>
+            <tr class="p2-row"><td>P2 · Ecosystem Integration</td><td>% expenses with customer / job attribution from partners</td><td>—</td></tr>
+            <tr class="p2-row"><td>P2 · Predictive Engine</td><td>% untagged costs correctly auto-assigned</td><td>Incorrect attribution rate</td></tr>
+            <tr class="p3-row"><td>P3 · Living Draft</td><td>% Living Drafts converted to sent invoices</td><td>% edited, deleted, or unsent</td></tr>
+            <tr class="p3-row"><td>P3 · Unbilled Widget</td><td>% unbilled costs assigned to invoice via widget</td><td>% of costs left unassigned</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+    <!-- ═══════════════ APPENDIX ═══════════════ -->
+    <div style="border-top:2px dashed var(--border);margin:60px 0 32px;padding-top:32px;">
+      <div style="font-size:0.65rem;text-transform:uppercase;letter-spacing:2px;color:var(--text-muted);font-weight:700;margin-bottom:4px;">Appendix</div>
+      <div style="font-size:1.2rem;font-weight:700;color:var(--text-primary);">Supporting Detail</div>
+    </div>
+
+    <!-- APPENDIX A -->
+    <div class="slide-card" style="margin-bottom:24px;">
+      <div class="slide-body" style="zoom:1;">
+        <div style="font-size:1rem;font-weight:700;color:var(--text-primary);margin-bottom:14px;">Xero's traditional vertical segments</div>
+        <table class="impact-table" style="margin-bottom:0;">
+          <thead><tr><th>Segment</th><th>Who</th><th>Primary Jobs</th><th>Complexity</th></tr></thead>
+          <tbody>
+            <tr><td>Sole Traders / Freelancers</td><td>Independent consultants, solo operators</td><td>Invoicing, tax prep, bank reconciliation, accountant collab</td><td>Lowest complexity · highest friction sensitivity</td></tr>
+            <tr><td>Small Service Businesses</td><td>Agencies, IT, consulting, marketing, legal</td><td>Recurring invoicing, payroll, expense mgmt, multi-user collab</td><td>Service-delivery revenue, recurring client relationships</td></tr>
+            <tr><td>Trades / Construction / Field Service</td><td>Contractors, electricians, plumbers, builders</td><td>Quote-to-invoice, project/job tracking, milestone billing, mobile</td><td>Field ops, materials, job costing, subcontractors</td></tr>
+            <tr><td>Retail / Ecommerce</td><td>Online retailers, Shopify sellers, small retail</td><td>Inventory, payment reconciliation, ecommerce integrations, sales tax</td><td>Strong integration ecosystem, transaction sync</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- APPENDIX B -->
+    <div class="slide-card" style="margin-bottom:24px;">
+      <div class="slide-body" style="zoom:1;">
+        <div style="font-size:1rem;font-weight:700;color:var(--text-primary);margin-bottom:14px;">Full hypothesis tree for the invoice creation plateau</div>
+        <table class="impact-table" style="margin-bottom:0;">
+          <thead><tr><th>Category</th><th>Hypothesis</th><th>Verdict</th></tr></thead>
+          <tbody>
+            <tr><td>Acquisition</td><td>Fewer new users signing up for Xero</td><td>🔴 Unlikely — Payments + other areas would also decline</td></tr>
+            <tr><td>Activation</td><td>New users fail to complete first invoice</td><td>🟠 Possible — if new users have complicated pre-invoicing workflows</td></tr>
+            <tr><td>Habit Formed</td><td>New users complete first invoice but find it difficult</td><td>🟠 Possible — especially for complex multi-source workflows</td></tr>
+            <tr><td>Retention</td><td>Habitual invoicers fed up with friction</td><td>🟢 Likely — UXR + dogfooding: click-heavy, no bulk, limited mobile</td></tr>
+            <tr><td>Growth Ceiling</td><td>Simple invoicing has reached saturation</td><td>🟢 Likely — UXR finds Xero doesn't tailor to complicated needs</td></tr>
+            <tr><td>Downstream</td><td>Businesses resort to Venmo / Zelle, stop invoicing</td><td>🔴 Weak — businesses still need invoices for accounting</td></tr>
+            <tr><td>Macro</td><td>Industry-wide SMB invoicing flattens</td><td>🔴 Unlikely — would affect entire industry</td></tr>
+            <tr><td>Substitution</td><td>Stripe Invoicing, AI tools taking the invoice creation occasion</td><td>🟠 Possible — Stripe revenue suite ~$1B run-rate; GPT/Claude adoption growing</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- APPENDIX C -->
+    <div class="slide-card" style="margin-bottom:24px;">
+      <div class="slide-body" style="zoom:1;">
+        <div style="font-size:1rem;font-weight:700;color:var(--text-primary);margin-bottom:14px;">Why Xero can win where others can't</div>
+        <div class="icon-grid icon-grid-2">
+          <div class="icon-card tinted-teal">
+            <div class="icon-box" style="background:#b3dde0;border-color:#1f6b72;">🔗</div>
+            <div class="icon-card-title">Ecosystem / Integrations</div>
+            <div class="icon-card-desc" style="margin-bottom:8px;">Every app connected to Xero — CRM, time tracker, payroll, payments — makes the platform harder to leave. Invoicing sits at the hub. The more integrations, the stickier the whole platform becomes.</div>
+            <div style="background:rgba(31,107,114,0.08);border-radius:var(--radius-sm);padding:8px 10px;font-size:0.75rem;color:#1f6b72;font-style:italic;line-height:1.4;">"Each integration a user adds makes Xero harder to leave — and invoicing is the hub that ties them all together."</div>
+          </div>
+          <div class="icon-card tinted-green">
+            <div class="icon-box" style="background:#c5dfc9;border-color:#4a7c59;">🏦</div>
+            <div class="icon-card-title">Accountant Relationships</div>
+            <div class="icon-card-desc" style="margin-bottom:8px;">Accountants influence the software choices of dozens to hundreds of SMBs. When accountants prefer Xero, they recommend it, onboard clients, and standardize workflows — creating a self-reinforcing distribution and retention flywheel.</div>
+            <div style="background:rgba(74,124,89,0.08);border-radius:var(--radius-sm);padding:8px 10px;font-size:0.75rem;color:#4a7c59;font-style:italic;line-height:1.4;">"Making invoicing great turns accountants into active advocates — not just passive users."</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- APPENDIX D -->
+    <div class="slide-card" style="margin-bottom:24px;">
+      <div class="slide-body" style="zoom:1;">
+        <div style="font-size:1rem;font-weight:700;color:var(--text-primary);margin-bottom:14px;">Go / no-go triggers for each pillar</div>
+        <table class="impact-table" style="margin-bottom:0;">
+          <thead><tr><th>Pillar</th><th>End of H1</th><th>End of H2</th></tr></thead>
+          <tbody>
+            <tr class="p1-row"><td>P1 — Fix Fundamentals</td><td>Metrics hit threshold → declare done, reallocate. Below threshold → extend; do not start P2/P3 main build until floor is stable.</td><td>N/A</td></tr>
+            <tr class="p2-row"><td>P2 — Expense Automation</td><td>Partner cooperation below threshold → double down on Predictive Engine; deprioritize further partner outreach.</td><td>AI accuracy evals below threshold → pause scaling; diagnose data sparsity, model quality, or segment mismatch.</td></tr>
+            <tr class="p3-row"><td>P3 — Procrastination</td><td>Living Draft engagement low → diagnose adoption before building Unbilled Widget on top of an unused foundation.</td><td>Precision evals below threshold → pause Widget; retune model before expanding surface area.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div><!-- /section-c -->
+
+
+  <!-- FOOTER -->
+  <div class="page-footer reveal">
+    <span>Richard Wu</span>
+    <span class="footer-note">Xero Payments &amp; Invoicing · Accelerating Invoice Creation Growth</span>
+  </div>
+
+  <script>
+    const revealSelectors = [
+      '.tip-banner', '.section-header', '.about-block',
+      '.project-group', '.slide-card', '.page-footer',
+      '.career-theme', '.career-table-wrap', '.personal-aside'
+    ];
+    revealSelectors.forEach(sel => {
+      document.querySelectorAll(sel).forEach(el => {
+        if (!el.classList.contains('reveal') && !el.classList.contains('reveal-stagger')) {
+          el.classList.add('reveal');
+        }
+      });
+    });
+    document.querySelectorAll('.icon-grid, .stat-row, .metric-chips, .lift-chips, .roadmap-cols, .exec-grid, .week1-grid, .hero-metrics, .proof-grid, .two-col').forEach(el => {
+      el.classList.add('reveal-stagger');
+      el.classList.remove('reveal');
+    });
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
